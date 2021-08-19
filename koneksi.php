@@ -3,7 +3,7 @@ class database{
 	var $host = "localhost";
 	var $username = "root";
 	var $password = "";
-	var $database = "rdp";
+	var $database = "crud";
 	var $koneksi;
 
 	function __construct(){
