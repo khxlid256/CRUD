@@ -154,3 +154,13 @@ table.table td i {
 nav{
     background-color: #1e1e1e;
 }
+.inpt{
+    background: #0c0c11;
+    color: white;
+    border: none;
+}
+.inpt:focus{
+    background: #0c0c11;
+    color: white;
+
+}

@@ -37,33 +37,41 @@
                         </div>
                         <div class="col-sm-7">
                             <button type="button" data-toggle="modal" data-target="#formAdd" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New Data</span></button>
-                            
+                            <a href="addAkun.php" type="button" class="btn btn-primary"><i class="material-icons">&#xe7fb;</i> <span>Add New Akun</span></a>
+
                             <div class="modal fade" id="formAdd" tabindex="-1" role="dialog">
                                 <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content text-dark">
+                                    <div class="modal-content text-white bg-dark">
 
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">New Data</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                                    <input type="text" class="form-control" id="recipient-name">
+                                                    <input type="text" class="form-control inpt" placeholder="Order ID | #123456">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="message-text" class="col-form-label">Message:</label>
-                                                    <textarea class="form-control" id="message-text"></textarea>
+                                                    <input type="text" class="form-control inpt" placeholder="Alamat IP | 127.0.0.1">
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="form-control inpt mb-1">
+                                                        <option>akun@example.com</option>
+                                                        <option>mydo91@example.com</option>
+                                                    </select>
+                                                    <a href="addAkun.php" style="text-decoration: none;" class="mt-1">
+                                                        <p>+ Tambah akun</p>
+                                                    </a>
                                                 </div>
                                             </form>
                                         </div>
 
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Send message</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save</button>
                                         </div>
                                     </div>
                                 </div>
