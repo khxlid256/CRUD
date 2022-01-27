@@ -1,7 +1,7 @@
 body {
     background: #050505;
     font-family: 'Varela Round', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
 }
 .table-responsive {
     margin: 30px 0;
@@ -150,4 +150,7 @@ table.table td i {
     float: left;
     margin-top: 10px;
     font-size: 13px;
+}
+nav{
+    background-color: #1e1e1e;
 }
