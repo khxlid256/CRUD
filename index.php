@@ -1,3 +1,6 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +43,7 @@
                             <a href="addAkun.php" type="button" class="btn btn-primary"><i class="material-icons">&#xe7fb;</i> <span>Add New Akun</span></a>
 
                             <div class="modal fade" id="formAdd" tabindex="-1" role="dialog">
-                                <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-dialog modal-md" role="document">
                                     <div class="modal-content text-white bg-dark">
 
                                         <div class="modal-header">
@@ -56,6 +59,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control inpt" placeholder="Alamat IP | 127.0.0.1">
+                                                    <p>Note: Jika lebih dari 1 IP, batasi dengan "," (Koma)</p>
                                                 </div>
                                                 <div class="form-group">
                                                     <select class="form-control inpt mb-1">
