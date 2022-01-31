@@ -5,14 +5,14 @@ if ($func->isLoggedIn()) {
   header("Location: home.php");
 }
 
-if (isset($_POST['is_register'])) {
+if (isset($_POST['is_login'])) {
   $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $error = "Email tidak valid!";
   } else {
     $password = $_POST['password'];
 
-    if ($func->register_user($email, $password)) {
+    if ($func->login_user($email, $password)) {
       $success = true;
     } else {
       $err = $func->getLastError();
@@ -26,7 +26,7 @@ if (isset($_POST['is_register'])) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Sign Up - ds.raihankhalid.my.id</title>
+  <title>Sign In - ds.raihankhalid.my.id</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -36,26 +36,24 @@ if (isset($_POST['is_register'])) {
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
+  <style>
+    .show {
+      border: none;
+    }
+  </style>
 </head>
 
 <body>
   <nav class="navbar">
-    <a class="navbar-brand text-white mt-1" href="./register.php">
-      <h4>TokyoLights | Sign Up</h4>
+    <a class="navbar-brand text-white mt-1" href="./">
+      <h4>TokyoLights | Sign In</h4>
     </a>
-    <a href="./" class="form-inline my-2 my-lg-0 btn btn-primary">Login</a>
+    <a href="register.php" class="form-inline my-2 my-lg-0 btn btn-primary">Register</a>
   </nav>
   <div class="container">
     <div class="login-form text-white">
-      <form method="POST" action="">
-        <h2 class="text-center">Sign Up</h2>
-        <?php if (isset($success)) : ?>
-          <div class="alert alert-success mb-3">
-            <div class="text-center">Berhasil Mendaftar! <a style="text-decoration: none;" href="index.php">Login</a></div>
-            <!-- <button type="button" class="close"><span aria-hidden="true">&times;</span></button> -->
-          </div>
-        <?php endif; ?>
+      <form method="post" class="">
+        <h2 class="text-center">Sign In</h2>
         <div class="form-group">
           <input type="email" class="form-control form-controllgn inpt" placeholder="Email Address" name="email" required="required" autocomplete="" value="<?php echo isset($email) ? $email : '' ?>">
           <?php if (isset($err)) : ?>
@@ -72,10 +70,15 @@ if (isset($_POST['is_register'])) {
           </div>
         </div>
         <div class="form-group">
-          <button type="submit" name="is_register" class="btn btnlgn btn-primary btn-block">Sign Up</button>
+          <button type="submit" name="is_login" class="btn btnlgn btn-primary btn-block">Sign In</button>
+        </div>
+        <div class="clearfix form-check">
+          <input class="form-check-input" type="checkbox" id="rememberme">
+          <label class="float-left form-check-label" for="rememberme"> Remember me</label>
+          <a href="forgotPassword.php" style="text-decoration: none;" class="float-right">Forgot Password?</a>
         </div>
       </form>
-      <p class="text-center"><a href="./" style="text-decoration: none;">Back to Login</a></p>
+      <p class="text-center"><a href="register.php" style="text-decoration: none;">Create an Account</a></p>
     </div>
   </div>
   <script>
