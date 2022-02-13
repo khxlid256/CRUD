@@ -6,9 +6,9 @@ if ($func->isLoggedIn()) {
 }
 
 if (isset($_POST['is_login'])) {
-  $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $error = "Email tidak valid!";
+  $email = filter_input(INPUT_POST, 'emailorusername', FILTER_SANITIZE_STRING);
+  if (!$email) {
+    $error = "Email atau Username tidak valid!";
   } else {
     $password = $_POST['password'];
 
@@ -55,7 +55,7 @@ if (isset($_POST['is_login'])) {
       <form method="post" class="">
         <h2 class="text-center">Sign In</h2>
         <div class="form-group">
-          <input type="email" class="form-control form-controllgn inpt" placeholder="Email Address" name="email" required="required" autocomplete="" value="<?php echo isset($email) ? $email : '' ?>">
+          <input type="text" class="form-control form-controllgn inpt" placeholder="Email Address or Username" name="emailorusername" required autocomplete value="<?php echo isset($email) ? $email : '' ?>">
           <?php if (isset($err)) : ?>
             <small class="text-danger form-group"><?= $err; ?></small>
           <?php endif; ?>

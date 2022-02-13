@@ -32,14 +32,14 @@ class Auth
 		}
 	}
 
-	public function fetchEmail()
+	public function fetchUserInfo($info)
 	{
 		$qry = $this->db->prepare("SELECT * FROM users WHERE id = :id");
 		$qry->bindParam(":id", $_SESSION['user_login']);
 		$qry->execute();
 		$fetch = $qry->fetch();
 
-		return $fetch['email'];
+		return $fetch[$info];
 	}
 
 	public function logout_user()
@@ -51,13 +51,14 @@ class Auth
 	}
 
 
-	public function register_user($email, $password)
+	public function register_user($email, $username, $password)
 	{
 		try {
 			$hashPw = password_hash($password, PASSWORD_DEFAULT);
-			$qry = $this->db->prepare("INSERT INTO users (email, password) VALUES(:email, :password)");
+			$qry = $this->db->prepare("INSERT INTO users (email, username, password) VALUES(:email, :username, :password)");
 			$qry->bindParam(":email", $email);
 			$qry->bindParam(":password", $hashPw);
+			$qry->bindParam(":username", $username);
 			$qry->execute();
 			return true;
 		} catch (PDOException $err) {
@@ -76,7 +77,7 @@ class Auth
 	public function login_user($email, $password)
 	{
 		try {
-			$qry = $this->db->prepare("SELECT * FROM users WHERE email = :email");
+			$qry = $this->db->prepare("SELECT * FROM users WHERE email = :email OR username = :email");
 			$qry->bindParam(":email", $email);
 			$qry->execute();
 			$fetch = $qry->fetch();

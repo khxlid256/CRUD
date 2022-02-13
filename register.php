@@ -7,12 +7,19 @@ if ($func->isLoggedIn()) {
 
 if (isset($_POST['is_register'])) {
   $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+  $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+  $password = $_POST['password'];
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $error = "Email tidak valid!";
+    if (!$username) {
+      $errorUsrnm = "Username tidak valid!";
+      if (!$password) {
+        $errorPasswd = "Password tidak valid!";
+      }
+    }
   } else {
-    $password = $_POST['password'];
-
-    if ($func->register_user($email, $password)) {
+    
+    if ($func->register_user($email, $username, $password)) {
       $success = true;
     } else {
       $err = $func->getLastError();
@@ -57,7 +64,13 @@ if (isset($_POST['is_register'])) {
           </div>
         <?php endif; ?>
         <div class="form-group">
-          <input type="email" class="form-control form-controllgn inpt" placeholder="Email Address" name="email" required="required" autocomplete="" value="<?php echo isset($email) ? $email : '' ?>">
+          <input type="text" class="form-control form-controllgn inpt" placeholder="Username" name="username" required value="<?php echo isset($username) ? $username : '' ?>">
+          <?php if (isset($errorUsrnm)) : ?>
+            <small class="text-danger form-group"><?= $errorUsrnm; ?></small>
+          <?php endif; ?>
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control form-controllgn inpt" placeholder="Email Address" name="email" required autocomplete="" value="<?php echo isset($email) ? $email : '' ?>">
           <?php if (isset($err)) : ?>
             <small class="text-danger form-group"><?= $err; ?></small>
           <?php endif; ?>
@@ -67,9 +80,12 @@ if (isset($_POST['is_register'])) {
         </div>
         <div class="form-group mb-3">
           <div class="input-group" id="show_hide_password">
-            <input type="password" class="form-control form-controllgn inpt" id="password" placeholder="Password" name="password" required autocomplete="current-password">
+            <input type="password" class="form-control form-controllgn inpt" id="password" placeholder="Password" name="password" required>
             <button type="button" class="btn btn-dark shadow-none"><i class="bi bi-eye-slash" aria-hidden="true"></i></button>
           </div>
+          <?php if (isset($errorPasswd)) : ?>
+            <small class="text-danger form-group"><?= $errorPasswd; ?></small>
+          <?php endif; ?>
         </div>
         <div class="form-group">
           <button type="submit" name="is_register" class="btn btnlgn btn-primary btn-block">Sign Up</button>
