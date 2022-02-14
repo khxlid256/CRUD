@@ -2,7 +2,7 @@
 require_once "conn.php";
 
 if (!$func->isLoggedIn()) {
-    header("Location: ./");
+    header("Location: ./login.php");
 }
 $usr = $func->fetchUserInfo("username");
 

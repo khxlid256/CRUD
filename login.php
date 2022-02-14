@@ -5,6 +5,11 @@ if ($func->isLoggedIn()) {
   header("Location: home.php");
 }
 
+if (isset($e)) {
+  $err = basename($_SERVER['SCRIPT_FILENAME']);
+  header("Location: errorPage.php?page=".$err);
+}
+
 if (isset($_POST['is_login'])) {
   $email = filter_input(INPUT_POST, 'emailorusername', FILTER_SANITIZE_STRING);
   if (!$email) {

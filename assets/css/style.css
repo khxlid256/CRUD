@@ -209,3 +209,7 @@ nav {
   .form-check {
     margin-bottom: 15px;
   }
+
+  .cardError {
+    background-color: #1e1e1e!important;
+  }

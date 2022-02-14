@@ -1,8 +1,8 @@
 <?php
 try {
 	$conn = new PDO('mysql:host=localhost;dbname=datashop', 'root', '', array(PDO::ATTR_PERSISTENT => TRUE));
-} catch (PDOException $err) {
-	echo $err->getMessage();
+} catch (PDOException $e) {
+	$e->getMessage();
 }
 
 $func = new Auth($conn);
