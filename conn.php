@@ -1,6 +1,7 @@
 <?php
+error_reporting(0);
 try {
-	$conn = new PDO('mysql:host=localhost;dbname=datashop', 'root', '', array(PDO::ATTR_PERSISTENT => TRUE));
+	$conn = new PDO('mysql:host=yourhost;dbname=yourdbname', 'khxlid', 'yourpasswd', array(PDO::ATTR_PERSISTENT => TRUE));
 } catch (PDOException $e) {
 	$e->getMessage();
 }
@@ -50,30 +51,6 @@ class Auth
 		return true;
 	}
 
-
-	public function register_user($email, $username, $password)
-	{
-		try {
-			$hashPw = password_hash($password, PASSWORD_DEFAULT);
-			$qry = $this->db->prepare("INSERT INTO users (email, username, password) VALUES(:email, :username, :password)");
-			$qry->bindParam(":email", $email);
-			$qry->bindParam(":password", $hashPw);
-			$qry->bindParam(":username", $username);
-			$qry->execute();
-			return true;
-		} catch (PDOException $err) {
-
-			if ($err->errorInfo[0] == 23000) {
-				$this->error = "Email tersebut sudah terdaftar!";
-				return false;
-			} else {
-				echo $err->getMessage();
-				return false;
-			}
-		}
-	}
-
-
 	public function login_user($email, $password)
 	{
 		try {
@@ -101,6 +78,46 @@ class Auth
 		} catch (PDOException $err) {
 			echo $err->getMessage();
 			return false;
+		}
+	}
+
+	public function register_user($email, $username, $password)
+	{
+		try {
+			$hashPw = password_hash($password, PASSWORD_DEFAULT);
+			$qry = $this->db->prepare("INSERT INTO users (email, username, password) VALUES(:email, :username, :password)");
+			$qry->bindParam(":email", $email);
+			$qry->bindParam(":password", $hashPw);
+			$qry->bindParam(":username", $username);
+			$qry->execute();
+			return true;
+		} catch (PDOException $err) {
+
+			if ($err->errorInfo[0] == 23000) {
+				$this->error = "Email tersebut sudah terdaftar!";
+				return false;
+			} else {
+				echo $err->getMessage();
+				return false;
+			}
+		}
+	}
+
+	public function save_akun($userid, $useremail, $password, $provider)
+	{
+		try {
+			$hashPw = password_hash($password, PASSWORD_DEFAULT);
+			$date = date("Y-m-d");
+			$qry = $this->db->prepare("INSERT INTO akun (user_id, email, password, provider, created_at) VALUES(:userid, :email, :password, :provider, :created_at)");
+			$qry->bindParam(":userid", $userid);
+			$qry->bindParam(":email", $useremail);
+			$qry->bindParam(":password", $hashPw);
+			$qry->bindParam(":provider", $provider);
+			$qry->bindParam(":created_at", $date);
+			$qry->execute();
+			return true;
+		} catch (PDOException $err) {
+
 		}
 	}
 }

@@ -183,33 +183,41 @@ nav {
   font-size: 15px;
 }
 .login-form form {
-    margin-bottom: 18px;
-    background: #1e1e1e;
-    padding: 30px;
-  }
+  margin-bottom: 18px;
+  background: #1e1e1e;
+  padding: 30px;
+}
 
-  .login-form h2 {
-    margin: 0 0 35px;
-  }
+.login-form h2 {
+  margin: 0 0 35px;
+}
 
-  .form-controllgn,
-  .btnlgn {
-    min-height: 38px;
-    border-radius: 5px;
-  }
+.form-controllgn,
+.btnlgn {
+  min-height: 38px;
+  border-radius: 5px;
+}
 
-  .btnlgn {
-    margin-top: 25px;
-    margin-bottom: 25px;
-    height: 40px;
-    font-size: 15px;
-    font-weight: bold;
-  }
+.btnlgn {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  height: 40px;
+  font-size: 15px;
+  font-weight: bold;
+}
 
-  .form-check {
-    margin-bottom: 15px;
-  }
+.form-check {
+  margin-bottom: 15px;
+}
 
-  .cardError {
-    background-color: #1e1e1e!important;
-  }
+.cardError {
+  background-color: #1e1e1e !important;
+}
+
+.anti-select {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

@@ -44,7 +44,7 @@ $usr = $func->fetchUserInfo("username");
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-5">
-                            <h2>DataAkun - <b><?= $usr;?></b></h2>
+                            <h2>DataAkun - <b><?= $usr; ?></b></h2>
                         </div>
                         <div class="col-sm-7">
                             <button type="button" data-toggle="modal" data-target="#formAdd" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New Akun</span></button>
@@ -55,7 +55,7 @@ $usr = $func->fetchUserInfo("username");
                                 <div class="modal-dialog modal-md" role="document">
                                     <div class="modal-content text-white bg-dark">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">New Data</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">New Akun</h5>
                                             <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -63,26 +63,32 @@ $usr = $func->fetchUserInfo("username");
                                         <div class="modal-body">
                                             <form method="POST">
                                                 <div class="form-group">
-                                                    <input type="text" name="orderID" class="form-control inpt" placeholder="Order ID | #123456">
+                                                    <input type="text" name="useremail" class="form-control inpt" placeholder="akun@example.com">
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" name="alamatIP" class="form-control inpt" placeholder="Alamat IP | 127.0.0.1">
-                                                    <p class="mt-1">Note: Jika lebih dari 1 IP, batasi dengan " , " (Koma)</p>
-                                                </div>
-                                                <div class="form-group">
-                                                    <select class="form-control inpt mb-1" name="akun">
-                                                        <option>akun@example.com</option>
-                                                        <option>mydo91@example.com</option>
+                                                    <select class="form-control inpt mb-1" name="provider">
+                                                        <option disabled selected>Provider</option>
+                                                        <option>Digital Ocean</option>
+                                                        <option>Vultr</option>
+                                                        <option>Linode</option>
+                                                        <option>AWS</option>
+                                                        <option>Azure</option>
+                                                        <option>IBM Cloud</option>
                                                     </select>
-                                                    <a href="addAkun.php" style="text-decoration: none;" class="mt-1">
-                                                        <p>+ Tambah akun</p>
-                                                    </a>
+                                                </div>
+                                                <div class="form-group">
+                                                    <details class="mt-3 mb-1">
+                                                        <summary>Note</summary>
+                                                        <p></p>
+                                                        <p class="anti-select">Password bersifat Opsional, Password akan di enkripsi sebelum disimpan.</p>
+                                                    </details>
+                                                    <input type="text" name="password" class="form-control inpt" placeholder="Password (Optional)">
                                                 </div>
                                         </div>
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                            <button type="submit" name="saveData" class="btn btn-primary">Save</button>
+                                            <button type="submit" name="saveAkun" class="btn btn-primary">Save</button>
                                         </div>
                                         </form>
                                     </div>

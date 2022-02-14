@@ -4,6 +4,12 @@ require_once "conn.php";
 if (!$func->isLoggedIn()) {
     header("Location: ./login.php");
 }
+
+if (isset($e)) {
+    $err = basename($_SERVER['SCRIPT_FILENAME']);
+    header("Location: errorPage.php?page=" . $err);
+}
+
 $usr = $func->fetchUserInfo("username");
 
 
@@ -44,7 +50,7 @@ $usr = $func->fetchUserInfo("username");
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-5">
-                            <h2>DataShop - <b><?= $usr;?></b></h2>
+                            <h2>DataShop - <b><?= $usr; ?></b></h2>
                         </div>
                         <div class="col-sm-7">
                             <button type="button" data-toggle="modal" data-target="#formAdd" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New Data</span></button>
