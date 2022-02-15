@@ -4,7 +4,28 @@ require_once "conn.php";
 if (!$func->isLoggedIn()) {
     header("Location: ./");
 }
-$usr = $func->fetchUserInfo("username");
+
+if (isset($e)) {
+    $err = basename($_SERVER['SCRIPT_FILENAME']);
+    header("Location: errorPage.php?page=" . $err);
+}
+
+$usr = $func->fetch_user_info("username");
+$userid = $func->fetch_user_info('id');
+
+if (isset($_POST['saveAkun'])) {
+    $email = $_POST['useremail'];
+    $provider = $_POST['provider'];
+    if (isset($_POST['password'])) {
+        $password = $_POST['password'];
+    }
+    if ($func->save_akun($userid, $email, $password, $provider)) {
+        $success = TRUE;
+    } else {
+        $error = $func->getLastError();
+    }
+}
+
 
 
 ?>
@@ -45,6 +66,10 @@ $usr = $func->fetchUserInfo("username");
                     <div class="row">
                         <div class="col-sm-5">
                             <h2>DataAkun - <b><?= $usr; ?></b></h2>
+                            <br>
+                            <?php if (isset($success)) : ?>
+                                <div class="alert alert-success my-auto mx-auto" role="alert"><strong>Success adding account <b><?php echo isset($email) ? $email : '' ?></b></strong></div>
+                            <?php endif; ?>
                         </div>
                         <div class="col-sm-7">
                             <button type="button" data-toggle="modal" data-target="#formAdd" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New Akun</span></button>
@@ -96,6 +121,7 @@ $usr = $func->fetchUserInfo("username");
                             </div>
                             <!-- END FORM MODAL TAMBAH DATA -->
 
+
                         </div>
                     </div>
                 </div>
@@ -103,87 +129,20 @@ $usr = $func->fetchUserInfo("username");
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Order ID</th>
-                            <th>IP</th>
-                            <th>Akun</th>
+                            <th>Email</th>
+                            <th>Password 
+                                <br>
+                                <a type="button" class="text-primary">Show Password</a>
+                            </th>
+                            <th>Provider</th>
                             <th>Date Added</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="#">Michael Holz</a></td>
-                            <td>142.93.127.95</td>
-                            <td>savagearham3@gmail.com</td>
-                            <td>04/10/2013</td>
-                            <td><span class="status text-success">&bull;</span> Active</td>
-                            <td>
-                                <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><a href="#">Paula Wilson</a></td>
-                            <td>142.93.127.95</td>
-                            <td>savagearham3@gmail.com</td>
-                            <td>05/08/2014</td>
-                            <td><span class="status text-success">&bull;</span> Active</td>
-                            <td>
-                                <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><a href="#">Antonio Moreno</a></td>
-                            <td>142.93.127.95</td>
-                            <td>savagearham3@gmail.com</td>
-                            <td>11/05/2015</td>
-                            <td><span class="status text-danger">&bull;</span> Inactive</td>
-                            <td>
-                                <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td><a href="#">Mary Saveley</a></td>
-                            <td>142.93.127.95</td>
-                            <td>savagearham3@gmail.com</td>
-                            <td>06/09/2016</td>
-                            <td><span class="status text-success">&bull;</span> Active</td>
-                            <td>
-                                <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td><a href="#">Martin Sommer</a></td>
-                            <td>142.93.127.95</td>
-                            <td>savagearham3@gmail.com</td>
-                            <td>12/08/2017</td>
-                            <td><span class="status text-danger">&bull;</span> Inactive</td>
-                            <td>
-                                <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td><a href="#">Fizy Hafezzy</a></td>
-                            <td>142.93.127.95</td>
-                            <td>savagearham3@gmail.com</td>
-                            <td>12/08/2017</td>
-                            <td><span class="status text-danger">&bull;</span> Inactive</td>
-                            <td>
-                                <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                            </td>
-                        </tr>
+                        <?php
+                        $func->list_user_akun($userid);
+                        ?>
                     </tbody>
                 </table>
                 <div class="clearfix">
@@ -201,6 +160,13 @@ $usr = $func->fetchUserInfo("username");
             </div>
         </div>
     </div>
+    <script>
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                $(this).remove();
+            });
+        }, 2000);
+    </script>
 </body>
 
 </html>

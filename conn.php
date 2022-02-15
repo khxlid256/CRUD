@@ -1,7 +1,7 @@
 <?php
 error_reporting(0);
 try {
-	$conn = new PDO('mysql:host=yourhost;dbname=yourdbname', 'khxlid', 'yourpasswd', array(PDO::ATTR_PERSISTENT => TRUE));
+	$conn = new PDO('mysql:host=yourhost;dbname=datashop', 'khxlid', 'yourpassword', array(PDO::ATTR_PERSISTENT => TRUE));
 } catch (PDOException $e) {
 	$e->getMessage();
 }
@@ -33,7 +33,7 @@ class Auth
 		}
 	}
 
-	public function fetchUserInfo($info)
+	public function fetch_user_info($info)
 	{
 		$qry = $this->db->prepare("SELECT * FROM users WHERE id = :id");
 		$qry->bindParam(":id", $_SESSION['user_login']);
@@ -49,6 +49,42 @@ class Auth
 		unset($_SESSION['user_login']);
 
 		return true;
+	}
+
+	public function list_user_akun($userid)
+	{
+		$qry = $this->db->prepare("SELECT * FROM akun WHERE user_id = :userid");
+		$qry->bindParam(":userid", $userid);
+		$qry->execute();
+
+		if ($qry->rowCount() > 0) {
+			$no = 1;
+			while ($row = $qry->fetch(PDO::FETCH_ASSOC)) {
+				$no++;
+?>
+				<tr>
+					<td><?php echo $no; ?></td>
+					<td><?php print($row['email']); ?></td>
+					<td><?php print($row['password']); ?></td>
+					<td><?php print($row['provider']); ?></td>
+					<td><?php print($row['created_at']); ?></td>
+					<td>
+						<a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+						<a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+					</td>
+				</tr>
+			<?php
+				$no++;
+			}
+		} else {
+			?>
+			<tr>
+				<td class="text-center" colspan="6">
+					<h5>Nothing here...</h5>
+				</td>
+			</tr>
+<?php
+		}
 	}
 
 	public function login_user($email, $password)
@@ -103,21 +139,52 @@ class Auth
 		}
 	}
 
+	public function enkripsi_password_akun($password)
+	{
+		try {
+			$method = "AES-128-CTR";
+			$key = $this->fetch_user_info("password");
+			$option = 0;
+			$iv = "2766723155588222";
+			$enkripsi = openssl_encrypt($password, $method, $key, $option, $iv);
+			return $enkripsi;
+		} catch (PDOException $err) {
+			echo $err->getMessage();
+			return false;
+		}
+	}
+
+	public function dekripsi_password_akun($password, $keypass)
+	{
+		try {
+			$method = "AES-128-CTR";
+			$key = $this->fetch_user_info("");
+			$option = 0;
+			$iv = "2766723155588222";
+			$dekripsi = openssl_decrypt($password, $method, $keypass, $option, $iv);
+			return $dekripsi;
+		} catch (PDOException $err){
+			echo $err->getMessage();
+			return false;
+		}
+	}
+
 	public function save_akun($userid, $useremail, $password, $provider)
 	{
 		try {
-			$hashPw = password_hash($password, PASSWORD_DEFAULT);
+			$hashpw = $this->enkripsi_password_akun($password);
 			$date = date("Y-m-d");
 			$qry = $this->db->prepare("INSERT INTO akun (user_id, email, password, provider, created_at) VALUES(:userid, :email, :password, :provider, :created_at)");
 			$qry->bindParam(":userid", $userid);
 			$qry->bindParam(":email", $useremail);
-			$qry->bindParam(":password", $hashPw);
+			$qry->bindParam(":password", $hashpw);
 			$qry->bindParam(":provider", $provider);
 			$qry->bindParam(":created_at", $date);
 			$qry->execute();
 			return true;
 		} catch (PDOException $err) {
-
+			echo $err->getMessage();
+			return false;
 		}
 	}
 }

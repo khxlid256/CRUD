@@ -10,7 +10,7 @@ if (isset($e)) {
     header("Location: errorPage.php?page=" . $err);
 }
 
-$usr = $func->fetchUserInfo("username");
+$usr = $func->fetch_user_info("username");
 
 
 ?>
